@@ -1,0 +1,52 @@
+use faculdade;
+
+-- Inserindo dados
+INSERT INTO CURSO (nome, carga_horaria) VALUES ('Sistemas de Informação', 3000);
+
+-- Inserindo dados do aluno
+INSERT INTO ALUNO (nome, cpf, data_nascimento, email, telefone)
+VALUES ('Ana Pereira', '321.654.987-00', '1999-10-20', 'ana.pereira@example.com', '(11)99887-1122');
+
+-- Inserindo dados da turma
+INSERT INTO TURMA (ano, semestre, id_curso)
+VALUES (2025, 2, 1);
+
+-- Inserindo dados da matricula
+INSERT INTO MATRICULA (id_aluno, id_turma, data_matricula)
+VALUES (2, 2, '2025-03-05');
+
+-- Inserindo dados da disciplina
+INSERT INTO DISCIPLINA (nome, carga_horaria, id_curso)
+VALUES ('Lógica de Programação', 60, 1);
+
+-- Inserindo dados do professor
+INSERT INTO PROFESSOR (nome, cpf, email, telefone, titulacao)
+VALUES ('Carlos Mendes', '456.123.789-00', 'carlos.mendes@example.com', '(11)91122-3344', 'Doutor');
+
+-- Inserindo dados do professor, matricula e turma
+INSERT INTO DISCIPLINA_TURMA (id_professor, id_disciplina, id_turma)
+VALUES (2, 2, 2);
+
+-- Inserindo dados da nota
+INSERT INTO NOTA (id_matricula, id_disciplina, nota, data_lancamento)
+VALUES (2, 2, 8.7, '2025-04-15');
+
+-- Consulta com as informações completas
+SELECT
+    M.id_matricula,
+    A.nome AS nome_aluno,
+    C.nome AS nome_curso,
+    D.nome AS nome_disciplina,
+    P.nome AS nome_professor,
+    T.ano,
+    T.semestre,
+    N.nota,
+    N.data_lancamento
+FROM MATRICULA M
+JOIN ALUNO A ON M.id_aluno = A.id_aluno
+JOIN TURMA T ON M.id_turma = T.id_turma
+JOIN CURSO C ON T.id_curso = C.id_curso
+JOIN DISCIPLINA_TURMA DT ON DT.id_turma = T.id_turma
+JOIN DISCIPLINA D ON DT.id_disciplina = D.id_disciplina
+JOIN PROFESSOR P ON DT.id_professor = P.id_professor
+LEFT JOIN NOTA N ON N.id_matricula = M.id_matricula AND N.id_disciplina = D.id_disciplina;
