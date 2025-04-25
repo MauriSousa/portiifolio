@@ -1,0 +1,61 @@
+● Quais são as principais necessidades dos clientes?
+a. Quais informações precisam ser armazenadas?
+
+    precisam ser armazenadas o cadastro aluno, matrícula,curso,turma, a disciplina por turma (que será o modelo intermediário), disciplina, professor e nota.
+  
+b. Quais os dados precisam ser guardados?
+
+    Aluno: nome, CPF, data de nascimento, e-mail, telefone
+    Professor: nome, CPF, e-mail, telefone, titulação
+    Curso: nome, carga horário
+    Disciplina: nome, carga horária, curso ao qual pertence
+    Turma: ano, semestre, curso relacionado
+    Matrícula: aluno matriculado, turma, data da matrícula
+    Disciplina/Turma: relação de quem ministra o quê, em qual turma
+    Nota: nota, disciplina, matrícula e data de lançamento
+
+
+c. O que será feito com os dados posteriormente?
+
+    Emitir boletins e históricos escolares dos alunos, Controlar matrículas por semestre, Gerenciar a grade curricular de cada curso, Acompanhar desempenho acadêmico
+    Relacionar quais professores ministraram quais disciplinas, Gerar relatórios gerenciais para coordenação acadêmica
+
+
+● Quais tabelas precisam ser criadas para que todas as informações sejam
+armazenadas?
+
+    ALUNO, MATRICULA, CURSO, TURMA, DISCIPLINA, PROFESSOR, DISCIPLINA_TURMA (modelo intermediário), NOTA
+
+● Quais atributos cada tabela deve ter?
+
+    ALUNO:	id_aluno, nome, cpf, data_nascimento, email, telefone
+    MATRICULA:	id_matricula, id_aluno, id_turma, data_matricula
+    CURSO:	id_curso, nome, carga_horaria
+    TURMA	id_turma:, ano, semestre, id_curso
+    DISCIPLINA:	id_disciplina, nome, carga_horaria, id_curso
+    PROFESSOR: id_professor, nome, cpf, email, telefone, titulacao
+    PROFESSOR_DISCIPLINA_TURMA: id_professor, id_disciplina, id_turma
+    NOTA: id_nota, id_matricula, id_disciplina, nota, data_lancamento
+
+● Qual o tipo de dados de cada atributo definido?
+
+    id  INT
+    nome	VARCHAR(100)
+    cpf	VARCHAR(14)
+    data_nascimento, data_matricula, data_lancamento	DATE
+    email	VARCHAR(100)
+    telefone	VARCHAR(15)
+    titulacao	VARCHAR(50)
+    carga_horaria	INT
+    ano, semestre	INT
+    nota	DECIMAL(4,2)
+    
+● Quais são os relacionamentos a serem criados entre as tabelas?
+
+    ALUNO - MATRICULA	1:N	Um aluno pode ter várias matrículas
+    MATRICULA - CURSO	N:1	Cada matrícula pertence a um Curso
+    TURMA - CURSO	N:1	Cada turma está ligada a um curso
+    DISCIPLINA - CURSO	N:1	Cada disciplina pertence a um curso
+    DISCIPLINA_TURMA - PROFESSOR, DISCIPLINA, TURMA, NOTA	N:1 para cada	Define quem ministra o quê em qual turma
+    NOTA - MATRICULA	N:1	Cada nota está ligada a uma matrícula
+    NOTA - DISCIPLINA	N:1	Cada nota está associada a uma disciplina
